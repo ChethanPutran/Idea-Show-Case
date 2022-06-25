@@ -1,6 +1,6 @@
 ## 💡💡 Idea Showcase Website 💡💡
 
-#### This is a great platform 🧑‍💻 for the tech-enthusiats who have great ideas to showcase." />
+#### This is a great platform 🧑‍💻 for the tech-enthusiats who have great ideas to showcase."
 
 ### Routes
 
