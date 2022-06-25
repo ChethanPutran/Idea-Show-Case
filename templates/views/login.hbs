@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Login</title>
+		<link rel="stylesheet" href="/public/resources/css/form.css" />
+	</head>
+
+	<body>
+		<div class="loginForm mainDiv">
+			<div class="box">
+				<h2>Login</h2>
+				<form method="POST" action="/login">
+					<div class="inputBox">
+						<input id="email" label="Email" type="text" name="email" autocomplete="off" required /><label
+							htmlFor="Email">Email</label>
+					</div>
+
+					<div class="inputBox">
+						<input id="password" label="Password" type="password" name="password" autocomplete="off"
+							required /><label htmlFor="Password">Password</label>
+					</div>
+
+					<div>
+						<button type="submit">Login</button>
+					</div>
+				</form>
+				<div>
+					<p>Not a user? <a href="/signup">Sign up</a></p>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

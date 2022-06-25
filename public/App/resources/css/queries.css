@@ -1,0 +1,40 @@
+@media screen and (max-width:1140px) {
+    .hero{
+
+    }
+}
+
+@media screen and (max-width:900px) {
+    .hero {
+
+    }
+}
+
+@media screen and (max-width:700px) {
+    .container{
+padding-right: 2rem;
+padding-left: 2rem;
+    }
+    .hero {
+grid-template-columns: 1fr !important;
+    }
+    .working-step{
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width:560px) {
+    .hero {
+    }
+}
+
+@media screen and (max-width:380px) {
+    .hero {
+
+    }
+}
+@media screen and (max-width:320px) {
+    .hero {
+
+    }
+}

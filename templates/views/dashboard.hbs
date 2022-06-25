@@ -1,0 +1,386 @@
+<html lang='en'>
+
+	<head>
+		<meta charset='UTF-8' />
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>Dashboard</title>
+		<link rel='stylesheet' href='/App/resources/css/dashboard.css' />
+
+	</head>
+
+	<body>
+		<div class='app'>
+			<aside class='sidebar' id='sidebar'>
+				<div class='sidebar-header'>
+					<div class='sidebar-imgbox'>
+						<img src='App/resources/images/logo_white.png' alt='Profile' class='sidebar-company-img' />
+					</div>
+					<div class='sidebar-textbox'>
+						<h3 class="sidebar-company--name">Idea2Exc</h3>
+						<p class="sidebar-company--desc">We conserve your future.</p>
+					</div>
+				</div>
+				<div class='sidebar-body'>
+					<a href='#' class='sidebar-link active'>
+						<div class='sidebar-iconbox'>
+							<ion-icon name="home-outline" class="sidebar-icon"></ion-icon>
+						</div>
+						<label class='sidebar-title'>Home</label>
+					</a>
+					<a href='#' class='sidebar-link'>
+						<div class='sidebar-iconbox'>
+							<ion-icon name="bar-chart-outline" class="sidebar-icon"></ion-icon>
+						</div>
+						<label class='sidebar-title'>Charts</label>
+					</a>
+					<a href='#' class='sidebar-link'>
+						<div class='sidebar-iconbox'>
+							<ion-icon name="analytics-outline" class="sidebar-icon"></ion-icon>
+						</div>
+						<label class='sidebar-title'>Analytics</label>
+					</a>
+
+					<a href='#' class='sidebar-link'>
+						<div class='sidebar-iconbox'>
+							<ion-icon name="chatbubble-ellipses-outline" class="sidebar-icon"></ion-icon>
+						</div>
+						<label class='sidebar-title'>
+							Messages
+							<span class='message_count'>2</span>
+						</label>
+					</a>
+					<a href='#' class='sidebar-link'>
+						<div class='sidebar-iconbox'>
+							<ion-icon name="settings-outline" class="sidebar-icon"></ion-icon>
+						</div>
+						<label class='sidebar-title'>Settings</label>
+					</a>
+				</div>
+				<div class="sidebar-footer">
+					<div class='sidebar-imgbox'>
+
+						<img src='{{user.profile_photo.img }}' alt='Profile' class='profile-img' />
+						<form action="/user/dashboard/avatar" method="post" enctype="multipart/form-data">
+							<input type="file" id="upload" hidden />
+							<input type="submit" value="upload" />
+							<label for="upload" class="sidebar-upload-btn">
+								<ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
+							</label>
+						</form>
+
+					</div>
+					<div class='sidebar-textbox'>
+						<h3 class="sidebar-username">{{user.name}}</h3>
+						<p class="sidebar-designation">{{user.about}}</p>
+					</div>
+					<div class='sidebar-iconbox'>
+						<ion-icon name="chevron-down-outline" class="sidebar-icon"></ion-icon>
+					</div>
+				</div>
+			</aside>
+
+			<div class="app-container">
+				<div class="prompt" id="prompt">
+					<h2 class="prompt-title"></h2>
+					<p class="prompt-message"></p>
+					<div class="prompt-btns">
+						<button class="btn prompt-yes">Yes</button>
+						<button class="btn prompt-no">Yes</button>
+					</div>
+				</div>
+				<div id='backdrop'></div>
+				<div id='snackbar' class="snackbar"></div>
+
+				<div class='optionModal'>
+					<ul class='optList'>
+						<li class='optItem' id='share'>Share</li>
+						<li class='optItem' id='archieve'>Archieve</li>
+						<li class='optItem' id='delete'>Delete</li>
+					</ul>
+				</div>
+
+				<div class='idea-modal card'>
+					<form class="idea-form">
+						<button class="btn idea-form-close" type="button">
+							<ion-icon name="close-circle-outline" class="form-close"></ion-icon>
+						</button>
+						<h1 class="idea-modal-title">New Idea</h1>
+						<div class="idea-form-field">
+							<label for='title' title="Give a title to your idea">Give a title to your
+								idea</label><br />
+							<input type='text' class='idea-input' placeholder='Title' title='Enter title' name='title'
+								id="title" required autocomplete='off' />
+						</div>
+						<div class="idea-form-field">
+							<label for='description'>Write something about it</label><br />
+							<textarea type='text' placeholder='Description' title='Write something about it.'
+								name='description' required autocomplete='off' class='idea-input'
+								id="description"></textarea>
+						</div>
+						<div class="idea-form-field">
+							<label for='idea-status'>Status</label>
+							<select name="status" id="idea-status" class="idea-input idea-status">
+								<option value="active">Active</option>
+								<option value="finished">Finished</option>
+								<option value="inactive">Inactive</option>
+							</select>
+						</div>
+						<button type='submit' class='btn btn-primary idea-form-btn' title='Submit'>
+							Add Idea
+						</button>
+					</form>
+				</div>
+				<nav class='navbar'>
+					<div></div>
+					<ul class='nav-list'>
+						<li class='nav-item'>
+							<input name='search' />
+						</li>
+						<li class='nav-item'>
+							<ion-icon name="search-outline" class="nav-icon"></ion-icon>
+						</li>
+						<li class='nav-item'>
+							<span class='count' id="mail-count">2</span>
+							<ion-icon name="mail-outline" class="nav-icon"></ion-icon>
+						</li>
+						<li class='nav-item'>
+							<span class='count' id="notification-count">4</span>
+							<ion-icon name="notifications-outline" class="nav-icon"></ion-icon>
+						</li>
+						<li class='nav-item'>
+							<button class="nav-logout">
+								Logout
+								<ion-icon name="log-out-outline" class="nav-icon"></ion-icon>
+							</button>
+
+						</li>
+
+
+					</ul>
+				</nav>
+				<main class='main'>
+					<div class='main-left'>
+						<header class="main-header">
+							<h1 class="main-title">
+								Dashboard
+							</h1>
+							<div class='filter'>
+								<input type='text' class='filter-input' placeholder="Search here..." />
+							</div>
+						</header>
+
+						<section class="main-ideas">
+							<div class="card ideas">
+								<header class="ideas-header">
+									<h3 class='ideas-header-title'>Ideas</h3>
+									<div class="ideas-header-btns">
+										<button class='btn btn-light' id="idea-refresh">Refresh</button>
+										<button class='btn btn-primary' id="idea-new">New</button>
+									</div>
+								</header>
+
+								<div class="tab ideas-tab">
+									<div class="idea-tab-titles" id="idea-tab-titles">
+										<button class='idea-title active' id="_active">Active <span
+												class="idea-count active"></span></button>
+										<button class='idea-title' id="_inactive">In active <span
+												class="idea-count inactive"></span></button>
+										<button class='idea-title' id="_finished">Finished <span
+												class="idea-count finished"></span></button>
+									</div>
+									<div id="idea-tab-data" class="ideas-tab-data">
+										<div class="idea-tab-box show">
+											<table class='idea-list' id='active'>
+												<thead class='idea-list-header'>
+													<tr class='idea-list-item'>
+														<th>Id</th>
+														<th>Title</th>
+														<th>Description</th>
+														<th>Edit</th>
+														<th>Delete</th>
+													</tr>
+												</thead>
+
+											</table>
+										</div>
+										<div class="idea-tab-box">
+
+											<table class='idea-list' id='inactive'>
+												<thead class='idea-list-header'>
+													<tr class='idea-list-item'>
+														<th>Id</th>
+														<th>Title</th>
+														<th>Description</th>
+														<th>Edit</th>
+														<th>Delete</th>
+													</tr>
+												</thead>
+
+											</table>
+										</div>
+										<div class="idea-tab-box">
+											<table class='idea-list' id='finished'>
+												<thead class='idea-list-header'>
+													<tr class='idea-list-item'>
+														<th>Id</th>
+														<th>Title</th>
+														<th>Description</th>
+														<th>Edit</th>
+														<th>Delete</th>
+													</tr>
+												</thead>
+
+											</table>
+										</div>
+
+
+									</div>
+
+								</div>
+
+
+
+							</div>
+						</section>
+						<section class="main-graphs">
+							<div class="graphs-top">
+								<div class="card idea-flow">
+									<canvas id="idea-flow-chart" class="idea-flow-chart"></canvas>
+								</div>
+
+							</div>
+							<div class="graphs-bottom">
+								<div>dd</div>
+								<div class="statistics">
+									<div class="card idea-stats">
+										<header class="idea-stats-header">
+											<h1 class="idea-stats-title">Statistics</h1>
+											<div class="idea-stats-filter"> <input type="date" name="stat" id="stat"
+													class="stats-filter-input"></div>
+
+										</header>
+										<main class="idea-stats-body">
+											<canvas id="idea-stats-chart" class="idea-stats-chart"></canvas>
+										</main>
+										<footer class="idea-stats-footer">
+											<div class="stats-info">
+												<div class="stats-info-box">
+													<div class="info-logo-box">
+														<ion-icon name="people-outline" class="info-logo"></ion-icon>
+													</div>
+													<div class="stats-description">
+														<p class="stats-description-num">10</p>
+														<p class="stats-description-title">Groups</p>
+													</div>
+												</div>
+											</div>
+											<div class="stats-info">
+												<div class="stats-info-box">
+													<div class="info-logo-box">
+														<ion-icon name="checkmark-done-circle-outline"
+															class="info-logo">
+														</ion-icon>
+													</div>
+													<div class="stats-description">
+														<p class="stats-description-num">5</p>
+														<p class="stats-description-title">Selected</p>
+													</div>
+												</div>
+											</div>
+										</footer>
+
+									</div>
+								</div>
+							</div>
+
+
+
+
+						</section>
+
+						<section class='main-boxes'>
+							<div class="box card c2">
+
+								<ion-icon name="notifications-outline" class="box-icon"></ion-icon>
+
+								<div class="box-texts">
+									<h2 class="box-title">Title</h2>
+									<h2 class="box-num">234</h2>
+								</div>
+								<div class="box-completion">
+									<div class="completion">
+										<div class="completion-container">
+											<div class="completion-percent c3">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="box card c1">
+
+								<ion-icon name="notifications-outline" class="box-icon"></ion-icon>
+
+								<div class="box-texts">
+									<h2 class="box-title">Title</h2>
+									<h2 class="box-num">234</h2>
+								</div>
+								<div class="box-completion">
+									<div class="completion">
+										<div class="completion-container">
+											<div class="completion-percent c2">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="box card c3">
+
+								<ion-icon name="notifications-outline" class="box-icon"></ion-icon>
+
+								<div class="box-texts">
+									<h2 class="box-title">Title</h2>
+									<h2 class="box-num">234</h2>
+								</div>
+								<div class="box-completion">
+									<div class="completion">
+										<div class="completion-container">
+											<div class="completion-percent c1">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</section>
+						<section class='main-insights'>
+							<h1 class="best-ideas-title">Best ideas</h1>
+							<div class="insights" id="insights">
+
+							</div>
+						</section>
+
+					</div>
+
+					<div class='main-right'>
+
+
+					</div>
+				</main>
+
+			</div>
+		</div>
+
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+
+		<script type='module' src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js'></script>
+		<script nomodule src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js'></script>
+		<script src='/App/Dashboard/dashboard.js' type="module"></script>
+		{{!--
+		<script src='/App/dashboard/test.js'></script> --}}
+	</body>
+
+</html>

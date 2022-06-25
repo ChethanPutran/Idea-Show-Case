@@ -1,0 +1,75 @@
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+html {
+	font-size: 62.5%;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: sans-serif;
+	pointer-events: all;
+}
+body {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.user {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.user__profile {
+	width: 40rem;
+	display: flex;
+	flex-direction: column;
+	padding: 5rem;
+	background: orange;
+	border-radius: 1rem;
+	box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.user__picture .picBox {
+	text-align: center;
+}
+
+.user__picture .profilePic {
+	width: 15rem;
+	height: auto;
+	background: #eee;
+	border-radius: 50%;
+	padding: 1rem;
+}
+.user__profile .user__name {
+	font-size: 2.2rem;
+	padding: 1rem;
+	text-align: center;
+	margin-bottom: 1.5rem;
+}
+
+.user__profile .user__about {
+	font-size: 1.6rem;
+	margin-bottom: 2rem;
+}
+
+.user__profile .user__info {
+	list-style: none;
+	font-size: 1.4rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	margin-left: 1rem;
+}
+.heading__tirtiary {
+	font-size: 1.6rem;
+	margin-bottom: 1.2rem;
+}
+.user__profile .user__info .userEmail {
+	margin-bottom: 0.7rem;
+}
+.user__profile .user__info .userPhone {
+}

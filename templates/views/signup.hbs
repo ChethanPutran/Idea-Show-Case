@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SIGN UP</title>
+	</head>
+
+	<body>
+		<div class="login-form">
+			<div class="box">
+				<h2>SIGN UP</h2>
+				<form method="POST">
+					<div class="input-box">
+						<input id="name" title="Enter your name" type="text" name="name" autocomplete="off"
+							required /><label for="name">Name</label>
+					</div>
+					<div class="input-box">
+						<input id="email" title="Enter your email" type="text" name="email" autocomplete="off"
+							required /><label for="Email">Email</label>
+					</div>
+					<div class="input-box">
+						<select id="designation" title="Your designation" name="designation">
+							<option value="investor">Investor</option>
+							<option value="student">Student</option>
+							<option value="working professional">Working professional</option>
+						</select>
+
+					</div>
+					<div class="input-box">
+						<input id="password" title="Enter phone number Eg: 7657975645" type='number' pattern="[0-9]{10}"
+							name="phoneNumber" autocomplete="off" required /><label for="phoneNumber">Phone
+							number</label>
+					</div>
+					<fieldset name="address">
+						<legend>Address</legend>
+						<div class="input-box">
+							<input id="street" title="Enter street" type="text" name="street" required />
+							<label for="street">Street</label>
+						</div>
+						<div class="input-box">
+							<input id="city" title="Enter city" type="text" name="city" required />
+							<label for="city">City</label>
+						</div>
+						<div class="input-box">
+							<input id="country" title="Enter country" type="text" name="country" required />
+							<label for="country">Country</label>
+						</div>
+						<div class="input-box">
+							<input id="zip" title="765765" type='tel' pattern="[0-9]{6}" name="zip" required />
+							<label for="zip">ZIP</label>
+						</div>
+					</fieldset>
+			</div>
+			<div class="input-box">
+				<input id="dob" title="Enter date of birth" type="date" name="dob" autocomplete="off" required /><label
+					for="dob">Date of birth</label>
+			</div>
+			<div class="input-box">
+				<input id="password" title="Enter password..." type="password" name="password" autocomplete="off"
+					required /><label for="Password">Password</label>
+			</div>
+
+			<div>
+				<button type="submit">Sign Up</button>
+			</div>
+			</form>
+		</div>
+		</div>
+	</body>
+
+</html>
