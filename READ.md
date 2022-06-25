@@ -1,7 +1,3 @@
-### yeun.github.io
-
-### iconic.ico
-
 ### Routes
 
 #### User routes
