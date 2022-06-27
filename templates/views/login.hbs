@@ -6,32 +6,44 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Login</title>
-		<link rel="stylesheet" href="/public/resources/css/form.css" />
+		<link rel="stylesheet" href="App/resources/css/login.css">
+		<link rel="stylesheet" href="/App/resources/css/notification.css" />
 	</head>
 
 	<body>
-		<div class="loginForm mainDiv">
-			<div class="box">
-				<h2>Login</h2>
-				<form method="POST" action="/login">
-					<div class="inputBox">
-						<input id="email" label="Email" type="text" name="email" autocomplete="off" required /><label
-							htmlFor="Email">Email</label>
-					</div>
 
-					<div class="inputBox">
-						<input id="password" label="Password" type="password" name="password" autocomplete="off"
-							required /><label htmlFor="Password">Password</label>
-					</div>
+		{{> notification}}
 
+		<div class="login" id="login">
+
+			<h2 class="heading">Login</h2>
+			<div class="login-box">
+				<div class="login-text-box">
+					<form class="login-form" id="login-form" method="post">
+
+						<div class="form-field"><label htmlFor="Email">Email</label>
+							<input id="email" label="Email" type="text" name="email" autocomplete="off" required />
+						</div>
+						<div class="form-field">
+							<label htmlFor="Password">Password</label>
+							<input id="password" label="Password" type="password" name="password" autocomplete="off"
+								required />
+
+						</div>
+
+						<div class="form-field"><button class="btn btn-form"> Login</button>
+						</div>
+					</form>
 					<div>
-						<button type="submit">Login</button>
+						<p class="link-box">Not a user? <a class="link" href="/signup">Sign up</a></p>
 					</div>
-				</form>
-				<div>
-					<p>Not a user? <a href="/signup">Sign up</a></p>
 				</div>
+				<div class="login-img-box">
+					<img src="App/resources/images/login.png" alt="login image" class="login-img">
+				</div>
+
 			</div>
+
 		</div>
 	</body>
 

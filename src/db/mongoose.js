@@ -15,3 +15,4 @@ mongoose.connect(
 		console.log('Database connection successful!');
 	}
 );
+module.exports = mongoose.connection;

@@ -1,8 +1,6 @@
 const express = require('express');
 const Idea = require('../modals/idea');
-const User = require('../modals/user');
 const { ObjectId } = require('mongodb');
-const mongoose = require('mongoose');
 const { isValid } = require('../utils/objHandler');
 const authenticate = require('../middlewares/authenticate');
 

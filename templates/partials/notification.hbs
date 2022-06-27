@@ -1,0 +1,15 @@
+{{#if message}}
+<div class="top-notification show">
+    <p class="warning-text">{{message}}</p>
+
+</div>
+<script>
+    window.onload = () => {
+        setTimeout(() => {
+            document.querySelector('.top-notification').classList.add('hide');
+            console.log('Hiding notification...');
+        }, 3000);
+    };
+
+</script>
+{{/if}}

@@ -1,0 +1,22 @@
+/******************** Notification *********************/
+.top-notification {
+    padding: 2rem;
+    background-color: #e67700;
+    color: #fff;
+    text-align: center;
+    font-size: 1.6rem;
+    transition: all .3s;
+}
+
+
+.top-notification.hide {
+    height: 0;
+    width: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+.warning-text {
+    font-size: 1.6rem;
+    color: #fff;
+}

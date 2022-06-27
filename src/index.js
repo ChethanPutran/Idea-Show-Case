@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config();
-require('./db/mongoose');
+const db = require('./db/mongoose');
 const path = require('path');
 const hbs = require('hbs');
 const cookieParser = require('cookie-parser');
@@ -9,6 +9,12 @@ const authenticate = require('./middlewares/authenticate');
 const userRouter = require('./routes/userRoutes');
 const indexRouter = require('./routes/index');
 const ideaRouter = require('./routes/ideaRoutes');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
+
+//30 mins
+const EXPIRATION_TIME = 1000 * 60 * 30;
 
 const app = express();
 
@@ -29,10 +35,25 @@ app.use(express.json());
 //Parsing cookies
 app.use(cookieParser());
 
+//For flashing messages while redirecting
+app.use(flash());
+
+//Session
+app.use(
+	session({
+		secret: process.env.SECRET,
+		resave: false,
+		saveUninitialized: true,
+		store: new MongoStore(db),
+		cookie: { maxAge: EXPIRATION_TIME },
+		autoRemove: 'interval',
+	})
+);
+
 //for parsing form-data
-app.use((req, res, next) => {
-	formParser(req, res, next);
-});
+// app.use((req, res, next) => {
+// 	formParser(req, res, next);
+// });
 
 // for parsing application/xwww-
 app.use(express.urlencoded({ extended: false }));
@@ -52,10 +73,12 @@ app.use((req, res, next) => {
 });
 app.use(indexRouter);
 app.use('/user', authenticate, userRouter);
-app.use('/user/ideas', authenticate, ideaRouter);
-app.get('/', authenticate, (req, res) => {
-	console.log(req.user);
-	res.status(200).render('dashboard', { user: req.user });
+app.use('/ideas', authenticate, ideaRouter);
+app.get('*', (req, res) => {
+	res.status(404).render('404');
+});
+app.post('/*', (req, res) => {
+	res.status(404).send({ error: 'Page not found!' });
 });
 app.listen(port, () => {
 	console.log(`Server is running at http://localhost:${port}`);

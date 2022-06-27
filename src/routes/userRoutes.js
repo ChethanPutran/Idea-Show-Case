@@ -1,15 +1,13 @@
 const express = require('express');
 const multer = require('multer');
-
 //For image formating
 const sharp = require('sharp');
-const fileUpload = require('../utils/fileUpload');
+const { ObjectId } = require('mongodb');
 const User = require('../modals/user');
-const authenticate = require('../middlewares/authenticate');
 const { isValid } = require('../utils/objHandler');
-const { sendWelcomeEmail } = require('../emails/emailSender');
 const writeFile = require('../utils/fileHandler');
-const { matchPassword } = require('../utils/passHandler');
+const fileUpload = require('../utils/fileUpload');
+const pngToDataUri = require('../utils/pngToDataUri');
 
 //File Upload
 //For disk storage
@@ -21,61 +19,84 @@ const upload = fileUpload(allowedFileTypes);
 
 const router = new express.Router();
 
-router.get('/:id/avatar', authenticate, async (req, res) => {
+router.get('/:id/avatar', async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id);
+		console.log(String(req.params.id));
 		if (!user) {
 			throw new Error('No user found!');
-		} else if (!user.avatar.img.data) {
+		} else if (!user.profile_photo.img.data) {
 			throw new Error('No profile photo associated with the user!');
 		}
 		res.set('Content-Type', 'image/png');
-		res.status(200).send(user.avatar.img.data);
+		res.status(200).send({ img: user.getImageDataUri() });
 	} catch (err) {
-		res.status(404).send(err.message);
+		console.log(err);
+		if (err.message.includes('Cast to ObjectId failed')) {
+			res.status(404).send({ error: 'Page not found!' });
+		} else {
+			res.status(404).send({ error: err.message });
+		}
 	}
 });
 
-router.post(
-	'/dashboard/avatar',
-	authenticate,
-	upload.single('avatar'),
-	async (req, res) => {
-		console.log('New request');
-		try {
-			console.log(req.file);
-			//Image Formatting
-			const imgBuff = await sharp(req.file.buffer)
-				.resize(350, 350)
-				.png()
-				.toBuffer();
-			const profileImg = {
-				uploadedAt: Date.now(),
-				name: req.file.originalname,
-				img: {
-					data: imgBuff,
-					contentType: 'image/png',
-				},
-			};
+router.get('/dashboard', async (req, res) => {
+	try {
+		const user = await User.findOne({
+			_id: req.session.user_id,
+		});
 
-			req.user.avatar = profileImg;
-			await req.user.save();
-			res.status(200).send({
-				success: 'Profile photo uploaded successfully',
-			});
-		} catch (err) {
-			console.log(err);
-			res.status(400).send({ error: err.message });
-		}
-	},
+		const profile_photo = pngToDataUri(user.profile_photo.img.data);
+		console.log(typeof profile_photo);
+		delete user.profile_photo;
+		user.img = profile_photo;
+		console.log(user.img, 'user.img');
+		res.status(200).render('dashboard', {
+			user: user,
+			message: req.flash('message'),
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(300).send({ error: err.message });
+	}
+});
 
-	(err, req, res, next) => {
-		if (res) {
+router.post('/dashboard/avatar', upload.single('avatar'), async (req, res) => {
+	try {
+		console.log('Uploading profile photo...');
+		//Image Formatting
+		const imgBuff = await sharp(req.file.buffer)
+			.resize(350, 350)
+			.png()
+			.toBuffer();
+		const profileImg = {
+			uploaded_at: Date.now(),
+			title: req.file.originalname,
+			img: {
+				data: imgBuff,
+				contentType: 'image/png',
+			},
+		};
+
+		const user = await User.findOne({
+			_id: req.session.user_id,
+		});
+
+		user.profile_photo = profileImg;
+
+		await user.save();
+		req.flash('message', 'Profile photo uploaded successfully');
+		res.redirect('/user/dashboard');
+	} catch (err) {
+		if (err.message.includes("'buffer' of undefined")) {
+			res.status(400).send({ error: 'Image is required!' });
+		} else {
 			res.status(400).send({ error: err.message });
 		}
 	}
-);
-router.delete('/dashboard/avatar', authenticate, async (req, res) => {
+});
+
+router.delete('/dashboard/avatar', async (req, res) => {
 	try {
 		req.user.avatar = undefined;
 		await req.user.save();
@@ -84,7 +105,7 @@ router.delete('/dashboard/avatar', authenticate, async (req, res) => {
 		res.status(400).send({ error: err.message });
 	}
 });
-router.post('/dashboard/avtar/test', authenticate, (req, res) => {
+router.post('/dashboard/avtar/test', (req, res) => {
 	// capture the encoded form data
 	req.on('data', (data) => {
 		writeFile(data, 'uploads/avtar.jpg');
@@ -97,27 +118,29 @@ router.post('/dashboard/avtar/test', authenticate, (req, res) => {
 	});
 });
 
-router.get('/dashboard', authenticate, async (req, res) => {
-	res.render('dashboard', { user: req.user });
+router.get('/:id', async (req, res) => {
+	try {
+		console.log('New req');
+		console.log('v', req.params.id);
+
+		const id = new ObjectId(req.params.id);
+
+		const user = await User.findOne({
+			_id: id,
+		});
+
+		if (user) {
+			res.status(200).send({ user: user });
+		} else {
+			res.status(400).json({ error: 'No user found' });
+		}
+	} catch (err) {
+		console.log(err);
+		res.status(400).json({ error: 'Invalid Id!' });
+	}
 });
-// router.get("/:id", authenticate, async(req, res) => {
-//     try {
-//         const id = new ObjectId(req.params.id);
-//         const user = await User.findOne({
-//             _id: id,
-//         });
 
-//         if (user) {
-//             res.status(200).send(user);
-//         } else {
-//             res.status(400).json({ error: "No user found" });
-//         }
-//     } catch (err) {
-//         res.status(400).json({ error: "Invalid Id!" });
-//     }
-// });
-
-router.patch('/dashboard', authenticate, async (req, res) => {
+router.patch('/dashboard', async (req, res) => {
 	try {
 		const data = req.body;
 		if (!isValid(User.schema.obj, data)) {
@@ -131,7 +154,7 @@ router.patch('/dashboard', authenticate, async (req, res) => {
 	}
 });
 
-router.delete('/dashboard', authenticate, async (req, res) => {
+router.delete('/dashboard', async (req, res) => {
 	try {
 		await req.user.remove();
 		res.status(200).send('Deleted Sucessfully');

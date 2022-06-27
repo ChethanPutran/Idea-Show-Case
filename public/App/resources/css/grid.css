@@ -1,0 +1,29 @@
+/******************** GRID *************************/
+.grid {
+    display: grid;
+    column-gap: var(--column-gap);
+    row-gap: var(--row-gap);
+    align-content: center;
+    justify-items: center;
+}
+
+
+.grid--2--cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3--cols {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4--cols {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid--5--cols {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.grid--center-v {
+    align-items: center;
+}

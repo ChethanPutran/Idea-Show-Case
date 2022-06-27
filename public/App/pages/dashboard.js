@@ -1,66 +1,82 @@
-import Ideas from '../Idea/ideas.js';
+import Ideas from '../Components/Idea/ideas.js';
 import Idea_Chart from '../Components/IChart.js';
-import Sidebar from '../Components/Sidebar.js';
-import Tab from '../Components/Tab.js';
+import Sidebar from '../Components/Sidebar/Sidebar.js';
+import Tab from '../Components/Tab/Tab.js';
 import Insights from '../Components/Insights/Insights.js';
-import Snackbar from '../Components/snackBar.js';
+import Snackbar from '../Components/Snackbar/Snackbar.js';
 import request from '../Utils/requests.js';
-import Sidebox from '../Components/sidebox/Sidebox.js';
+import Sidebox from '../Components/Sidebox/Sidebox.js';
+import Modal from '../Components/Modal/Modal.js';
+
+const profile_img = document.getElementById('profile-img');
+const edit_profile_form = document.getElementById('edit-profile');
+
+const openModel = () => {
+	Modal.show();
+};
+const closeModal = () => {
+	Modal.hide();
+};
+
+Modal.init(edit_profile_form, closeModal);
+
+profile_img.addEventListener('click', openModel);
+
+const ideas = {
+	active: [],
+	inactive: [],
+	finished: [],
+	all: [],
+};
+const viewers = [
+	{
+		name: 'Rock',
+		about: 'Sleepy',
+		profile_url: 'https://picsum.photos/280',
+	},
+	{
+		name: 'Mohan',
+		about: 'Innovation is going on...',
+		profile_url: 'https://picsum.photos/200',
+	},
+	{
+		name: 'Sheela',
+		about: 'No where to go',
+		profile_url: 'https://picsum.photos/280',
+	},
+	{
+		name: 'Shivn',
+		about: 'All good.',
+		profile_url: 'https://picsum.photos/270',
+	},
+];
+const suggestions = [
+	{
+		name: 'Rock',
+		about: 'Sleepy',
+		profile_url: 'https://picsum.photos/250',
+	},
+	{
+		name: 'Mohan',
+		about: 'Innovation is going on...',
+		profile_url: 'https://picsum.photos/220',
+	},
+	{
+		name: 'Sheela',
+		about: 'No where to go',
+		profile_url: 'https://picsum.photos/210',
+	},
+	{
+		name: 'Shivn',
+		about: 'All good.',
+		profile_url: 'https://picsum.photos/230',
+	},
+];
 
 class Dashboard {
-	static ideas = {
-		active: [],
-		inactive: [],
-		finished: [],
-		all: [],
-	};
-	static viewers = [
-		{
-			name: 'Rock',
-			about: 'Sleepy',
-			profile_url: 'https://picsum.photos/200',
-		},
-		{
-			name: 'Mohan',
-			about: 'Innovation is going on...',
-			profile_url: 'https://picsum.photos/200',
-		},
-		{
-			name: 'Sheela',
-			about: 'No where to go',
-			profile_url: 'https://picsum.photos/200',
-		},
-		{
-			name: 'Shivn',
-			about: 'All good.',
-			profile_url: 'https://picsum.photos/200',
-		},
-	];
-	static suggestions = [
-		{
-			name: 'Rock',
-			about: 'Sleepy',
-			profile_url: 'https://picsum.photos/200',
-		},
-		{
-			name: 'Mohan',
-			about: 'Innovation is going on...',
-			profile_url: 'https://picsum.photos/200',
-		},
-		{
-			name: 'Sheela',
-			about: 'No where to go',
-			profile_url: 'https://picsum.photos/200',
-		},
-		{
-			name: 'Shivn',
-			about: 'All good.',
-			profile_url: 'https://picsum.photos/200',
-		},
-	];
 	static async get_ideas(show_snackbar = true) {
 		try {
-			const data = await request({ url: '/user/ideas' });
+			const data = await request({ url: '/ideas' });
 			console.log('Ideas fetched sucessfully!');
 			if (show_snackbar) {
 				Snackbar.show('Ideas fetched sucessfully!', 2000, 'sucess');
@@ -76,13 +92,13 @@ class Dashboard {
 		}
 	}
 	static set_ideas(data) {
-		this.ideas.active = data.filter((idea) => {
+		ideas.active = data.filter((idea) => {
 			return idea.status === 'active';
 		});
-		this.ideas.inactive = data.filter((idea) => idea.status === 'inactive');
-		this.ideas.finished = data.filter((idea) => idea.status === 'finished');
-		this.ideas.all = [...data];
-		console.log(this.ideas);
+		ideas.inactive = data.filter((idea) => idea.status === 'inactive');
+		ideas.finished = data.filter((idea) => idea.status === 'finished');
+		ideas.all = [...data];
+		console.log(ideas);
 	}
 	static async reload(show_snackbar = false) {
 		if (show_snackbar) {
@@ -128,7 +144,7 @@ class Dashboard {
 			];
 
 			for (let i of data) {
-				this.viewers.push(i);
+				viewers.push(i);
 			}
 			this.update();
 		};
@@ -168,8 +184,8 @@ class Dashboard {
 
 		this.get_ideas(true)
 			.then(() => {
-				Ideas.init(this.ideas, this.reload.bind(this));
-				new Insights(get4Insights(getRandom4(), this.ideas.all));
+				Ideas.init(ideas, this.reload.bind(this));
+				new Insights(get4Insights(getRandom4(), ideas.all));
 			})
 			.catch((err) => {
 				console.log(err);
@@ -177,6 +193,6 @@ class Dashboard {
 	}
 }
 
-window.onload = (event) => {
-	Dashboard.init();
-};
+// window.onload = (event) => {
+// 	Dashboard.init();
+// };

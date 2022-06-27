@@ -1,6 +1,6 @@
-import Snackbar from './Snackbar.js';
-import request from '../Utils/requests.js';
-import Loader from './Loader.js';
+import Snackbar from '../Snackbar/Snackbar.js';
+import request from '../../Utils/requests.js';
+import Loader from '../Loader/Loader.js';
 
 export default class OptionModal {
 	constructor() {

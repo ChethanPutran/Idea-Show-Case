@@ -1,5 +1,5 @@
-import Backdrop from '../Components/Backdrop.js';
-import Prompt from '../Components/Prompt.js';
+import Backdrop from '../Backdrop/Backdrop.js';
+import Prompt from '../Prompt/Prompt.js';
 
 export default class IdeaForm {
 	static idea_modal = document.querySelector('.idea-modal');

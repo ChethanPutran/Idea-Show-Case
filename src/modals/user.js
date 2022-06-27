@@ -4,10 +4,11 @@ const { hash, matchPassword } = require('../utils/passHandler');
 const jwt = require('jsonwebtoken');
 const Idea = require('./idea');
 const authToken = process.env.AUTH_TOKEN;
+const pngToDataUri = require('../utils/pngToDataUri');
 
 const userSchema = new mongoose.Schema(
 	{
-		name: { type: String, minlength: 5, maxlength: 25, required: true },
+		name: { type: String, minlength: 4, maxlength: 25, required: true },
 		email: {
 			type: String,
 			unique: true,
@@ -56,6 +57,11 @@ const userSchema = new mongoose.Schema(
 				type: Number,
 
 				required: true,
+				validate(value) {
+					if (value.toString().length != 6) {
+						throw { message: 'Invalid zip!' };
+					}
+				},
 			},
 		},
 		phone_number: {
@@ -69,22 +75,15 @@ const userSchema = new mongoose.Schema(
 				}
 			},
 		},
-		tokens: [
-			{
-				token: {
-					type: String,
-					required: true,
-				},
-			},
-		],
+
 		profile_photo: {
 			uploaded_at: {
 				type: Date,
 			},
 			title: { type: String },
 			img: {
-				data: Buffer,
-				contentType: String,
+				data: { type: Buffer },
+				contentType: { type: String },
 			},
 		},
 	},
@@ -107,8 +106,12 @@ userSchema.methods.toJSON = function () {
 	delete userObj.tokens;
 	userObj['created_at'] = userObj['createdAt'];
 	userObj['updated_at'] = userObj['updatedAt'];
+
+	if (userObj.profile_photo.img.data) {
+		userObj.img = pngToDataUri(userObj.profile_photo.img.data);
+		delete userObj.profile_photo;
+	}
 	delete userObj.createdAt;
-	delete userObj.updatedAt;
 	return userObj;
 };
 
@@ -120,6 +123,9 @@ userSchema.methods.generateAuthToken = async function () {
 
 	await this.save();
 	return token;
+};
+userSchema.methods.getImageDataUri = function () {
+	return pngToDataUri(this.profile_photo.img.data);
 };
 
 userSchema.statics.findByCredentials = async function (email, password) {

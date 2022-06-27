@@ -1,6 +1,6 @@
 import IdeaList from './ideaList.js';
-import Snackbar from '../Components/snackBar.js';
-import request from '../Utils/requests.js';
+import Snackbar from '../Snackbar/Snackbar.js';
+import request from '../../Utils/requests.js';
 import IdeaForm from './IdeaForm.js';
 
 export default class Ideas {

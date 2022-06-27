@@ -1,73 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta charset='UTF-8' />
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<link rel='stylesheet' href='App/resources/css/signup.css' />
+		<link rel="stylesheet" href="/App/resources/css/notification.css" />
 		<title>SIGN UP</title>
 	</head>
 
 	<body>
-		<div class="login-form">
-			<div class="box">
-				<h2>SIGN UP</h2>
-				<form method="POST">
-					<div class="input-box">
-						<input id="name" title="Enter your name" type="text" name="name" autocomplete="off"
-							required /><label for="name">Name</label>
-					</div>
-					<div class="input-box">
-						<input id="email" title="Enter your email" type="text" name="email" autocomplete="off"
-							required /><label for="Email">Email</label>
-					</div>
-					<div class="input-box">
-						<select id="designation" title="Your designation" name="designation">
-							<option value="investor">Investor</option>
-							<option value="student">Student</option>
-							<option value="working professional">Working professional</option>
-						</select>
+		{{> notification}}
+		<div class='signup' id='signup'>
+			<div class='signup-box'>
+				<div class='signup-img-box'>
+					<h2 class='heading'>Signup</h2>
+					<img src='App/resources/images/signin.png' alt='signup image' class='signup-img' />
+				</div>
+				<div class='signup-text-box'>
+					<form class='signup-form' id='signup-form' method='post'>
+						<div class='form-field'><label for='name'>Name</label>
+							<input id='name' title='Enter your name' type='text' name='name' placeholder="John"
+								required />
+						</div>
+						<div class='form-field'><label for='Email'>Email</label>
+							<input id='email' title='Enter your email' type='text' name='email'
+								placeholder="john@gmail.com" required />
 
-					</div>
-					<div class="input-box">
-						<input id="password" title="Enter phone number Eg: 7657975645" type='number' pattern="[0-9]{10}"
-							name="phoneNumber" autocomplete="off" required /><label for="phoneNumber">Phone
-							number</label>
-					</div>
-					<fieldset name="address">
-						<legend>Address</legend>
-						<div class="input-box">
-							<input id="street" title="Enter street" type="text" name="street" required />
-							<label for="street">Street</label>
 						</div>
-						<div class="input-box">
-							<input id="city" title="Enter city" type="text" name="city" required />
-							<label for="city">City</label>
+						<div class='form-field'><label for='Password'>Password</label>
+							<input id='password' title='Enter password...' type='password' name='password' required />
 						</div>
-						<div class="input-box">
-							<input id="country" title="Enter country" type="text" name="country" required />
-							<label for="country">Country</label>
+						<div class='form-field'>
+							<label for='designation'>What best suits you?</label>
+							<select name='designation' title='Your designation' id='designation' required>
+								<option value=''>Please choose one option</option>
+								<option value='investor'>Investor</option>
+								<option value='student'>Student</option>
+								<option value='working professional'>Working
+									professional</option>
+							</select>
+
 						</div>
-						<div class="input-box">
-							<input id="zip" title="765765" type='tel' pattern="[0-9]{6}" name="zip" required />
-							<label for="zip">ZIP</label>
+						<div class='form-field'><label for='phoneNumber'>Phone
+								number</label>
+							<input id='password' title='Enter phone number Eg: 7657975645' type='number'
+								pattern='[0-9]{10}' name='phoneNumber' required placeholder="7654563542" />
 						</div>
-					</fieldset>
-			</div>
-			<div class="input-box">
-				<input id="dob" title="Enter date of birth" type="date" name="dob" autocomplete="off" required /><label
-					for="dob">Date of birth</label>
-			</div>
-			<div class="input-box">
-				<input id="password" title="Enter password..." type="password" name="password" autocomplete="off"
-					required /><label for="Password">Password</label>
+						<div class='form-field'><label for='street'>Street</label>
+							<input id='street' title='Enter street' type='text' name='street' required
+								placeholder="2nd cross" />
+
+						</div>
+						<div class='form-field'><label for='city'>City</label>
+							<input id='city' title='Enter city' type='text' name='city' required
+								placeholder="Bangalore" />
+
+						</div>
+						<div class='form-field'><label for='country'>Country</label>
+							<input id='country' title='Enter country' type='text' name='country' required
+								placeholder="India" />
+
+						</div>
+						<div class='form-field'><label for='zip'>ZIP</label>
+							<input id='zip' title='765765' type='tel' pattern='[0-9]{6}' name='zip' required
+								placeholder="567221" />
+
+						</div>
+
+						<div class='form-field'><label for='dob'>Date of birth</label>
+							<input id='dob' title='Enter date of birth' type='date' name='dob' required />
+						</div>
+
+						<div class='form-field'><button class='btn btn-form'>
+								signup</button>
+							<div>
+								<p class="link-box">Already a user? <a class="link" href="/login">Login</a></p>
+							</div>
+						</div>
+					</form>
+
+				</div>
+
 			</div>
 
-			<div>
-				<button type="submit">Sign Up</button>
-			</div>
-			</form>
-		</div>
 		</div>
 	</body>
 

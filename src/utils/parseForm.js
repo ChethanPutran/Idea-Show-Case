@@ -1,21 +1,26 @@
 const multiparty = require('multiparty');
 
-const formParser = (req, res, next) => {
-	if (!req.headers['content-type']) {
+const formParser = async (req, res, next) => {
+	try {
+		if (
+			req.headers['content-type'] &&
+			req.headers['content-type'].includes('multipart/form-data')
+		) {
+			console.log('Parsing form-data...');
+			// parse a file upload
+			const data = null;
+			const form = new multiparty.Form();
+			form.parse(req, function (err, fields, files) {
+				if (err) {
+					throw err;
+				}
+				req.body = fields;
+			});
+		}
 		next();
-		return;
+	} catch (err) {
+		res.status(400).send({ error: err.message });
 	}
-	if (req.headers['content-type'].includes('multipart/form-data')) {
-		// parse a file upload
-		var form = new multiparty.Form();
-		form.parse(req, function (err, fields, files) {
-			console.log(fields, files);
-			req.body = fields;
-			req.files = files;
-		});
-		next();
-	}
-	next();
 };
 
 module.exports = formParser;

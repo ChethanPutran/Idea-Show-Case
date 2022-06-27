@@ -6,15 +6,26 @@
 		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
 		<title>Dashboard</title>
 		<link rel='stylesheet' href='/App/resources/css/dashboard.css' />
+		<link rel="stylesheet" href="/App/resources/css/notification.css" />
 
 	</head>
 
 	<body>
+		{{> notification}}
 		<div class='app'>
+
+			<div class="card edit-profile" id="edit-profile">
+				<form action="dashboard/avatar" class="edit-profile-form" enctype="multipart/form-data" method="post">
+					<input type="file" name="avatar">
+					<button class="btn btn-edit-profile" type="submit">
+						Change
+					</button>
+				</form>
+			</div>
 			<aside class='sidebar' id='sidebar'>
 				<div class='sidebar-header'>
 					<div class='sidebar-imgbox'>
-						<img src='App/resources/images/logo_white.png' alt='Profile' class='sidebar-company-img' />
+						<img src='/App/resources/images/logo_white.png' alt='Profile' class='sidebar-company-img' />
 					</div>
 					<div class='sidebar-textbox'>
 						<h3 class="sidebar-company--name">Idea2Exc</h3>
@@ -60,19 +71,12 @@
 				<div class="sidebar-footer">
 					<div class='sidebar-imgbox'>
 
-						<img src='{{user.profile_photo.img }}' alt='Profile' class='profile-img' />
-						<form action="/user/dashboard/avatar" method="post" enctype="multipart/form-data">
-							<input type="file" id="upload" hidden />
-							<input type="submit" value="upload" />
-							<label for="upload" class="sidebar-upload-btn">
-								<ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
-							</label>
-						</form>
-
+						<img src="" alt='Profile' class='profile-img' id="profile-img" />
+						{{user.img}}
 					</div>
 					<div class='sidebar-textbox'>
 						<h3 class="sidebar-username">{{user.name}}</h3>
-						<p class="sidebar-designation">{{user.about}}</p>
+						<p class="sidebar-designation">{{user.designation}}</p>
 					</div>
 					<div class='sidebar-iconbox'>
 						<ion-icon name="chevron-down-outline" class="sidebar-icon"></ion-icon>
@@ -89,7 +93,8 @@
 						<button class="btn prompt-no">Yes</button>
 					</div>
 				</div>
-				<div id='backdrop'></div>
+				<div id='backdrop' class="backdrop"></div>
+				<div class="modal" id="modal"></div>
 				<div id='snackbar' class="snackbar"></div>
 
 				<div class='optionModal'>
@@ -378,7 +383,7 @@
 
 		<script type='module' src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js'></script>
 		<script nomodule src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js'></script>
-		<script src='/App/Dashboard/dashboard.js' type="module"></script>
+		<script src='/App/pages/dashboard.js' type="module"></script>
 	</body>
 
 </html>

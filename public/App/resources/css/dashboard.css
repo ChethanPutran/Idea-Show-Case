@@ -67,7 +67,7 @@ section {
     grid-template-columns: 1fr 5fr;
     height: 100vh;
     width: 100vw;
-
+    position: relative;
 }
 
 .app-container {
@@ -1041,23 +1041,6 @@ tr.idea-list-item {
     stroke-dashoffset: 10;
 }
 
-/************************** Backdrop **********************************/
-#backdrop {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.75);
-    z-index: 10;
-    pointer-events: none;
-    display: none;
-}
-
-#backdrop.visible {
-    display: block;
-    pointer-events: all;
-}
 
 /***************************** General Styles ***********************/
 
@@ -1254,7 +1237,7 @@ tr.idea-list-item {
 }
 
 /************************ Modal ******************************/
-.optionModal {
+.option-modal {
     background: white;
     display: none;
     padding: 1rem;
@@ -1284,7 +1267,7 @@ tr.idea-list-item {
     margin-bottom: 0;
 }
 
-.optionModal.show {
+.option-modal.show {
     display: block;
 }
 
@@ -1403,6 +1386,10 @@ tr.idea-list-item {
     color: #ac0404;
 }
 
+.btn-edit-profile {
+    background-color: #ffaa00;
+    color: #8c8c8c;
+}
 
 button:disabled,
 button[disabled] {
@@ -1547,7 +1534,52 @@ button[disabled] {
 
 
 
+/*********** Edit-Form ********/
+.edit-profile {
+    display: flex;
+    width: 50rem;
+    padding: 1rem;
 
+}
+
+/*********** Modal **************/
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 900;
+    display: none;
+    background-color: #fff;
+    color: #000;
+    transition: all .3s ease-out;
+}
+
+.modal.show {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/************************** Backdrop **********************************/
+.backdrop {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 10;
+    pointer-events: none;
+    display: none;
+}
+
+.backdrop.visible {
+    display: block;
+    pointer-events: all;
+}
 
 
 /* Animations */
