@@ -20,8 +20,8 @@ const app = express();
 const port = process.env.PORT;
 
 const publicPath = path.join(__dirname, '../public');
-const viewsPath = path.join(__dirname, '../templates/views');
-const partialsPath = path.join(__dirname, '../templates/partials');
+const viewsPath = path.join(__dirname, '../views');
+const partialsPath = path.join(__dirname, '../views/partials');
 
 app.use(express.static(publicPath));
 app.set('view engine', 'hbs');
