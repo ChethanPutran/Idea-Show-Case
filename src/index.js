@@ -4,7 +4,6 @@ require('./db/mongoose');
 const path = require('path');
 const hbs = require('hbs');
 const cookieParser = require('cookie-parser');
-const formParser = require('./utils/parseForm');
 const authenticate = require('./middlewares/authenticate');
 const userRouter = require('./routes/userRoutes');
 const indexRouter = require('./routes/index');

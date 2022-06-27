@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken');
-const User = require('../modals/user');
 const verifyAuthToken = (token) => {
 	try {
 		const decodedToken = jwt.verify(token, process.env.AUTH_TOKEN);

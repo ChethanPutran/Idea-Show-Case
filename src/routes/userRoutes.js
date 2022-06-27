@@ -1,5 +1,4 @@
 const express = require('express');
-const multer = require('multer');
 //For image formating
 const sharp = require('sharp');
 const { ObjectId } = require('mongodb');
