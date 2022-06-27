@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 mongoose.connect(
 	process.env.DB_URL,
 	{
@@ -10,9 +11,8 @@ mongoose.connect(
 	},
 	(error) => {
 		if (error) {
-			return console.log('Unable to connect to database!');
+			throw console.log('Unable to connect to database!');
 		}
 		console.log('Database connection successful!');
 	}
 );
-module.exports = mongoose.connection;

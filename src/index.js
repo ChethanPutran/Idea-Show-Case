@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config();
-const db = require('./db/mongoose');
+require('./db/mongoose');
 const path = require('path');
 const hbs = require('hbs');
 const cookieParser = require('cookie-parser');
@@ -12,7 +12,6 @@ const ideaRouter = require('./routes/ideaRoutes');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
-
 //30 mins
 const EXPIRATION_TIME = 1000 * 60 * 30;
 
@@ -44,9 +43,9 @@ app.use(
 		secret: process.env.SECRET,
 		resave: false,
 		saveUninitialized: true,
-		store: new MongoStore(db),
-		cookie: { maxAge: EXPIRATION_TIME },
-		autoRemove: 'interval',
+		store: new MongoStore({
+			mongoUrl: process.env.DB_URL,
+		}),
 	})
 );
 

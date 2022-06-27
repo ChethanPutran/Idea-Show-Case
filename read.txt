@@ -1,0 +1,10 @@
+heroku create idea-show-case
+
+## Setting env variables
+heroku config:set key1=value1 key2=value2
+
+## Removing env variables
+heroku config:unset key
+
+## View env variables
+heroku config
