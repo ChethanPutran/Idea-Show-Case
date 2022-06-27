@@ -1,11 +1,11 @@
-const verifyAuthToken = (token) => {
-	try {
-		const decodedToken = jwt.verify(token, process.env.AUTH_TOKEN);
-		return decodedToken;
-	} catch (err) {
-		throw new Error('Invalid Token!');
-	}
-};
+// const verifyAuthToken = (token) => {
+// 	try {
+// 		const decodedToken = jwt.verify(token, process.env.AUTH_TOKEN);
+// 		return decodedToken;
+// 	} catch (err) {
+// 		throw new Error('Invalid Token!');
+// 	}
+// };
 
 const authenticate = async (req, res, next) => {
 	try {

@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const { hash, matchPassword } = require('../utils/passHandler');
-const jwt = require('jsonwebtoken');
 const Idea = require('./idea');
-const authToken = process.env.AUTH_TOKEN;
 const pngToDataUri = require('../utils/pngToDataUri');
 
 const userSchema = new mongoose.Schema(
@@ -115,15 +113,15 @@ userSchema.methods.toJSON = function () {
 	return userObj;
 };
 
-userSchema.methods.generateAuthToken = async function () {
-	const token = jwt.sign({ _id: this._id.toString() }, authToken, {
-		expiresIn: '7 days',
-	});
-	this.tokens = this.tokens.concat({ token });
+// userSchema.methods.generateAuthToken = async function () {
+// 	const token = jwt.sign({ _id: this._id.toString() }, authToken, {
+// 		expiresIn: '7 days',
+// 	});
+// 	this.tokens = this.tokens.concat({ token });
 
-	await this.save();
-	return token;
-};
+// 	await this.save();
+// 	return token;
+// };
 userSchema.methods.getImageDataUri = function () {
 	return pngToDataUri(this.profile_photo.img.data);
 };
