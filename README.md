@@ -1,4 +1,4 @@
-## 💡💡 Project Showcase Website 💡💡
+## 💡💡 Idea Showcase Website 💡💡
 
 #### This is a great platform 🧑‍💻 for the tech-enthusiats who have great ideas to showcase."
 
